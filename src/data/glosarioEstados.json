@@ -1,0 +1,557 @@
+[
+  {
+    "categoria": "SISTEMA DIGESTIVO",
+    "estados": [
+      {
+        "nombre": "AEROFAGIA",
+        "significado": "INGESTIÓN DE AIRE QUE PROVOCA FLATULENCIA O MOLESTIAS INTESTINALES",
+        "ejemplos": "AEROFAGIA-EXCESO DE AIRE TRAGADOFLATULENCIA- FERMENTACIÓN DE LOS ALIMENTOS EN EL ESTÓMAGODISTENSIÓN ABDOMINAL"
+      },
+      {
+        "nombre": "DISFAGIA",
+        "significado": "DIFICULTAD O IMPOSIBILIDAD DE TRAGAR",
+        "ejemplos": "DIFICULTAD EN DEGLUCIÓN"
+      },
+      {
+        "nombre": "INAPETENTE",
+        "significado": "ESTADO EN EL QUE LA PERSONA NO TIENE APETITO O GANAS DE COMER",
+        "ejemplos": "SIN APETITO, SIN GANAS DE COMER"
+      },
+      {
+        "nombre": "MELENAS",
+        "significado": "PRESENCIA DE SANGRE DIGERIDA EN HECES",
+        "ejemplos": "DEPOSICIONES NEGRAS VISCOSAS, DE MAL OLOR"
+      },
+      {
+        "nombre": "RECTORRAGIA",
+        "significado": "PRESENCIA DE SANGRE ROJA EN HECES O PÉRDIDA DE SANGRE ROJA POR EL ANO",
+        "ejemplos": "HEMORRAGIA A TRAVÉS DEL ANO"
+      },
+      {
+        "nombre": "VÓMITOS- EMESIS",
+        "significado": "EXPULSIÓN VIOLENTA POR LA BOCA DE LO QUE ESTÁ CONTENIDO EN EL ESTÓMAGO",
+        "ejemplos": "HEMATEMESIS- VÓMITO CON SANGRE FRESCAVÓMITO BILIOSO-VÓMITO CON BILISVOMITO FECALOIDEO -VOMITO CON RESTOS OSCUROS, DE MAL OLOR"
+      },
+      {
+        "nombre": "ANOREXIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "POLIDIPSIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "HIPOREXIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "POLIFAGIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "ESTREÑIMIENTO",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "COGNITIVO/CONDUCTUAL",
+    "estados": [
+      {
+        "nombre": "AGRESIVO",
+        "significado": "INTENCIÓN DE CAUSAR DAÑO FÍSICO O VERBAL HACIA UNO MISMO O HACIA LOS DEMÁS",
+        "ejemplos": "AUTO AGRESIVIDADHETEROAGRESIVIDAD"
+      },
+      {
+        "nombre": "ANSIOSO",
+        "significado": "ESTADO MENTAL CARACTERIZADO POR UNA GRAN INQUIETUD, EXCITACIÓN Y UNA EXTREMA INSEGURIDAD",
+        "ejemplos": "AGITADO, NERVIOSO, INQUIETO, LLOROSO, DEAMBULANTE, ANGUSTIADO,OPRESIÓN EN EL PECHO,INTRANQUILO"
+      },
+      {
+        "nombre": "APÁTICO",
+        "significado": "ESTADO DE ÁNIMO IMPASIBLE QUE SE REFLEJA EN LA AUSENCIA DE GANAS, ENTUSIASMO Y MOTIVACIÓN",
+        "ejemplos": "DESGANADO, INDIFERENTE, SUPRESIÓN DE LAS EMOCIONES, FALTA DE ENERGÍA"
+      },
+      {
+        "nombre": "DESORIENTADO",
+        "significado": "ESTADO DE CONFUSIÓN Y DESCONCENTRACIÓN",
+        "ejemplos": "CONFUSIÓN DE PERSONA, CONFUSIÓN ESPACIAL, CONFUSIÓN TEMPORAL"
+      },
+      {
+        "nombre": "IRASCIBLE",
+        "significado": "PROPENSO A IRRITARSE, ENFADARSE O DESARROLLAR SENTIMIENTOS DE INDIGNACIÓN",
+        "ejemplos": "ENFADADA, MALHUMORADA, IRRITABLE, IRACUNDO, INDIGNADO, IRRESPETUOSO"
+      },
+      {
+        "nombre": "LLOROSO",
+        "significado": "QUE MUESTRA INDICIOS DE HABER LLORADO, DE IR A LLORAR O ESTAR LLORANDO",
+        "ejemplos": "TRISTE ( SIN ESTAR ANSIOSA)"
+      },
+      {
+        "nombre": "SOMNOLIENTO",
+        "significado": "ESTADO DE SENTIR NECESIDAD DE DORMIR DURANTE EL DÍA EN MOMENTOS INAPROPIADOS",
+        "ejemplos": "DORMIDO, ADORMILADO, ATURDIDO, AUSENTE"
+      },
+      {
+        "nombre": "TRISTE",
+        "significado": "SENTIMIENTO DE DOLOR ANÍMICO PRODUCIDO POR UN SUCESO DESFAVORABLE QUE SUELE MANIFESTARSE CON UN ESTADO DE ÁNIMO PESIMISTA, LA INSATISFACCIÓN Y LA TENDENCIA AL LLANTO.",
+        "ejemplos": "ABATIDO, DECAÍDO, MELANCÓLICO"
+      },
+      {
+        "nombre": "FRUSTRADO",
+        "significado": "QUE SIENTE LA IMPOSIBILIDAD DE SATISFACER UNA NECESIDAD O UN DESEO. SENTIMIENTO DE TRISTEZA, DECEPCIÓN Y DESILUSIÓN QUE ESTA IMPOSIBILIDAD PROVOCA.",
+        "ejemplos": "DESILUSIONADO, DECEPCIONADO"
+      },
+      {
+        "nombre": "EUFÓRICO",
+        "significado": "SENSACIÓN EXAGERADA Y EXTERIORIZADA DE OPTIMISMO Y BIENESTAR, PRODUCIDA A MENUDO POR LA ADMINISTRACIÓN DE MEDICAMENTOS O DROGAS, O POR ALGUNA SATISFACCIÓN MATERIAL O ESPIRITUAL.",
+        "ejemplos": "EXCITADO, HISTÉRICO, FRENÉTICO"
+      },
+      {
+        "nombre": "OBSESIVO",
+        "significado": "ESTADO EN EL QUE LA PERSONA MANIFIESTA IDEAS Y PENSAMIENTOS RECURRENTES.SENSACIÓN DE ESTAR MENTALMENTE “EN BUCLE”",
+        "ejemplos": "OFUSCADO, INSISTENTE"
+      },
+      {
+        "nombre": "DELIRANTE",
+        "significado": "ESTADO DE ALTERACIÓN MENTAL, GENERALMENTE PROVOCADO POR UNA ENFERMEDAD O TRASTORNO, EN EL QUE SE PRODUCE UNA GRAN EXCITACIÓN E INTRANQUILIDAD, DESORDEN DE LAS IDEAS Y ALUCINACIONES.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "ACATISIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "DEAMBULANTE",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "POSTURA Y MARCHA",
+    "estados": [
+      {
+        "nombre": "HIPERFLEXIÓN CUELLO",
+        "significado": "EXCESIVA FLEXIÓN DEL CUELLO. LA CABEZA TIENDE HACIA ABAJO, EL MENTÓN VA HACIA EL ESTERNÓN.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "HIPEREXTENSIÓN CUELLO",
+        "significado": "EXCESIVA EXTENSIÓN DEL CUELLO. LA CABEZA TIENDE A IR HACIA ATRÁS, EL MENTÓN SE ALEJA DEL ESTERNÓN.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "FLEXION DEL TRONCO",
+        "significado": "EL TRONCO VA HACIA DELANTE. PUEDE SUCEDER EN SEDESTACIÓN O BIPEDESTACIÓN.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "INCLINACIÓN LATERAL DE LA CABEZA O EL TRONCO",
+        "significado": "LA CABEZA O EL TRONCO SE INCLINAN HACIA UN LADO (DERECHO O IZQUIERDO)",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "MARCHA PARKINSONIANA",
+        "significado": "Tipo de marcha instaurada donde el CENTRO DE GRAVEDAD ADELANTADO, PASOS CORTOS Y RÁPIDOS. DÉFICIT DE EQUILIBRIO",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "MARCHA ESPÁSTICA O HIPERTÓNICA",
+        "significado": "Tipo de marcha instaurada con GRAN COMPONENTE DE RIGIDEZ, CON PIES EN ARRASTRE. Cursa con aumento anormal del tono muscular.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "MARCHA HIPOTÓNICA",
+        "significado": "Tipo de marcha instaurada donde LA DEBILIDAD MUSCULAR PROVOCA DIFICULTAD EN LA MARCHA. LOS MIEMBROS INFERIORES CLAUDICAN, DIFICULTAD PARA MANTENERSE EN PIE.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "DEBILIDAD MUSCULAR MMII",
+        "significado": "DISMINUCIÓN DE FUERZA MUSCULAR EN MIEMBROS INFERIORES POR DIFERENTES CAUSAS (Somnolencia, efecto medicación, desconocido…). La persona puede seguir caminando pero con dificultad.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "CLAUDICACIÓN MMII",
+        "significado": "FALTA DE FUERZA EN MMII QUE IMPIDE LA CAPACIDAD DE CAMINAR POR COMPLETO.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "DÉFICIT DE EQUILIBRIO",
+        "significado": "DISMINUCIÓN DEL EQUILIBRIO EN LA MARCHA POR DIFERENTES CAUSAS.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "MARCHA INESTABLE",
+        "significado": "DIFICULTAD PARA CAMINAR (por diferentes causas) QUE PUEDE LLEVAR ASOCIADO RIESGO DE CAÍDAS",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "SISTEMA GENITOURINARIO",
+    "estados": [
+      {
+        "nombre": "ANURIA",
+        "significado": "AUSENCIA TOTAL DE ORINA O EN CUANTÍA INFERIOR A 50 ML EN 24 HORAS",
+        "ejemplos": "NO ORINA"
+      },
+      {
+        "nombre": "HEMATURIA",
+        "significado": "PRESENCIA DE SANGRE EN LA ORINA",
+        "ejemplos": "MACRO HEMATURIA- PRESENCIA DE SANGRE A SIMPLE VISTAMICRO HEMATURIA- APARECE OCULTA EN LA ORINA Y SOLO SE PRESENCIA CON MEDIOS TÉCNICOS"
+      },
+      {
+        "nombre": "INCONTINENCIA URINARIA",
+        "significado": "PÉRDIDA DEL CONTROL DE LA VEJIGA",
+        "ejemplos": "MICCIÓN INVOLUNTARIA, SE ORINA, PERDIDA DE ORINA, ENURESIS DIURNA"
+      },
+      {
+        "nombre": "POLIURIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "NICTURIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "POLAQUIURIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "ITU",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "SISTEMA RESPIRATORIO",
+    "estados": [
+      {
+        "nombre": "ATRAGANTAMIENTO",
+        "significado": "ES LA OBSTRUCCIÓN ACCIDENTAL DE LAS VÍAS RESPIRATORIAS, GENERALMENTE AL FALLAR LA DEGLUCIÓN DE ALIMENTOS",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "BRONCO ASPIRACIÓN",
+        "significado": "ES EL PASO ACCIDENTAL DE ALIMENTOS SÓLIDOS O LÍQUIDOS A LAS VÍAS RESPIRATORIAS",
+        "ejemplos": "DRENAJE BRONCOSCÓPICO"
+      },
+      {
+        "nombre": "DISNEA",
+        "significado": "AHOGO O DIFICULTAD EN LA RESPIRACIÓN",
+        "ejemplos": "DISNEA DE ESFUERZO, DISNEA PAROXÍSTICA NOCTURNA, DISNEA DE REPOSO"
+      },
+      {
+        "nombre": "EXPECTORACIÓN",
+        "significado": "EXPULSIÓN MEDIANTE LA TOS O EL CARRASPEO DE LAS SECRECIONES Y MUCOSIDAD",
+        "ejemplos": "FLEMAS AMARILLAS, FLEMAS VERDOSAS, ESPUTO, TOS PRODUCTIVA"
+      },
+      {
+        "nombre": "FATIGADO",
+        "significado": "ES UNA RESPUESTA NORMAL ANTE EL ESFUERZO FÍSICO, ESTRÉS EMOCIONAL, ABURRIMIENTO",
+        "ejemplos": "CANSADO, AGOTADO, SOFOCADO, FALTA DE ENERGÍA Y MOTIVACIÓN"
+      },
+      {
+        "nombre": "HIPOXEMIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "BRADICARDIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "TAQUICARDIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "TAQUIPNEA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "SIBILANCIA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "PULSO ARRITMICO",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "TOS PRODUCTIVA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "TOS SECA",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "ALTERACIÓN HIDROELECTROLÍTICA",
+    "estados": [
+      {
+        "nombre": "DESHIDRATADO",
+        "significado": "ALTERACIÓN O FALTA DE AGUA Y SALES MINERALES EN EL PLASMA DE UN CUERPO",
+        "ejemplos": "SED INTENSA, PIEL SECA, DISMINUCIÓN DEL VOLUMEN DE LA ORINA, ORINA OSCURA, BOCA SECA"
+      },
+      {
+        "nombre": "SUDOROSO",
+        "significado": "PROCESO DE TRANSPIRACIÓN Y LA LIBERACIÓN DEL SUDOR DEL CUERPO POR PARTE DE LAS GLÁNDULAS SUDORÍPARAS",
+        "ejemplos": "SUDORACIÓN POR EL CALOR Y EL EJERCICIO, HIPERHIDROSIS"
+      },
+      {
+        "nombre": "TEMBLOROSA",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "SISTEMA MUSCULOESQUELÉTICO",
+    "estados": [
+      {
+        "nombre": "ESPASTICIDAD, HIPERTONÍA O RIGIDEZ",
+        "significado": "TRASTORNO MOTOR DEL SISTEMA NERVIOSO EN EL QUE LOS MÚSCULOS SE MANTIENEN PERMANENTEMENTE CONTRAÍDOS",
+        "ejemplos": "AGARROTADA, RÍGIDA, TENSA, TIJERETEO,"
+      },
+      {
+        "nombre": "HIPOTONÍA",
+        "significado": "DISMINUCIÓN GENERALIZADA DEL TONO MUSCULAR",
+        "ejemplos": "FLACIDEZ, PÉRDIDA DE LA FUNCIÓN MUSCULAR"
+      },
+      {
+        "nombre": "MIOCLONIAS",
+        "significado": "CONTRACCIONES INVOLUNTARIAS, BREVES, BRUSCAS Y REPENTINAS DE MÚSCULOS",
+        "ejemplos": "MIOCLONO EPILÉPTICO, MIOCLONO ESENCIAL, MIOCLONO PROVOCADO POR RUIDO, LUZ,…"
+      },
+      {
+        "nombre": "VALGO DE RODILLA",
+        "significado": "La cadera se encuentra en rotación interna y la rodilla tiende a ir hacia dentro. Puede ser en ambas rodillas o en una sola.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "VARO DE RODILLA",
+        "significado": "La cadera se encuentra en rotación externa y la rodilla va hacia fuera. Puede ser en ambas rodillas o en una sola.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "PIE EQUINO",
+        "significado": "El pie cae, va hacia abajo, hacia flexión plantar. Si se instaura en esta posición puede ser muy doloroso.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "ROTACIÓN INTERNA DE CADERA",
+        "significado": "Es el movimiento o posición de la cadera en el que la pierna gira hacia dentro o hacia el centro del cuerpo en relación con la pelvis.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "ROTACIÓN EXTERNA DE CADERA",
+        "significado": "Es el movimiento o posición de la cadera en el que la pierna gira hacia fuera en relación con la pelvis.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "CONTRACTURA MUSCULAR",
+        "significado": "Es una contracción continuada e involuntaria del músculo o de algunas de sus fibras que aparecen al realizar un esfuerzo, este se manifiesta como un abultamiento de la zona que desarrolla dolor y alteraciones de la función normal del músculo.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "FISURA",
+        "significado": "La fisura ósea es una fractura de hueso incompleta. Podríamos decir que es como una herida o grieta que se produce en el hueso",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "FRACTURA",
+        "significado": "La fractura es cuando el hueso se ha roto por completo produciendo discontinuidad entre los dos extremos de éste",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "TENDINITIS",
+        "significado": "La tendinitis es una inflamación de los tejidos conectivos fibrosos gruesos que unen los músculos a los huesos.",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "EPICONDILITIS DE CODO",
+        "significado": "La epicondilitis lateral o codo de tenista afecta los músculos y tendones del antebrazo que son lo que extienden la muñeca y los dedos",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "CERVICALGIA",
+        "significado": "La cervicalgia es el dolor que afecta a la nuca y las vértebras cervicales y que puede extenderse al cuello, la cabeza o a las extremidades ...",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "LUMBALGIA",
+        "significado": "La lumbalgia es el dolor localizado en la parte inferior o baja de la espalda. Puede extenderse a nalgas y MMII",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "DOLOR REFERIDO",
+        "significado": "Es el que se produce a distancia, debido a una compresión o irritación de una raíz nerviosa. Por lo tanto genera sensaciones dolorosas o de hormigueos en la zona que corresponde al nervio afectado.",
+        "ejemplos": "Puede ser en la nalga o pierna por compresión de raíz nerviosa lumbar o en el brazo por raíz nerviosa cervical"
+      }
+    ]
+  },
+  {
+    "categoria": "CONSTANTES VITALES",
+    "estados": [
+      {
+        "nombre": "HIPEREMIA",
+        "significado": "AUMENTO EN LA IRRIGACIÓN A UN ÓRGANO O TEJIDO",
+        "ejemplos": "HIPEREMIA ACTIVA- DILATACIÓN DE LAS ARTERIOLASHIPEREMIA PASIVA- OBSTRUCCIÓN DEL FLUJO SANGUÍNEO DE RETORNO"
+      },
+      {
+        "nombre": "HIPERGLUCEMIA",
+        "significado": "AUMENTO ANORMAL DE LA CANTIDAD DE GLUCOSA QUE HAY EN LA SANGRE",
+        "ejemplos": "NIVEL DE AZÚCAR MAYOR A 126 mg/dl EN AYUNAS"
+      },
+      {
+        "nombre": "HIPOGLUCEMIA",
+        "significado": "DISMINUCIÓN ANORMAL DE LA CANTIDAD DE GLUCOSA QUE HAY EN LA SANGRE",
+        "ejemplos": "NIVEL DE AZÚCAR MENOR A 70 mg/dl EN AYUNAS"
+      },
+      {
+        "nombre": "HIPOTERMIA",
+        "significado": "DISMINUCIÓN DE LA TEMPERATURA DEL CUERPO POR DEBAJO DE LO NORMAL",
+        "ejemplos": "TEMPERATURA CORPORAL POR DEBAJO DE 35ºC"
+      },
+      {
+        "nombre": "HIPERTERMIA",
+        "significado": "AUMENTO DE LA TEMPERATURA DEL CUERPO POR ENCIMA DE LO NORMAL",
+        "ejemplos": "TEMPERATURA CORPORAL POR ENCIMA DE 37ºCFEBRÍCULA- TEMPERATURA NO PASA DE 38ºCFIEBRE MODERADA- ENTRE 38ºC Y 39ºCFIEBRE ALTA- SUPERIOR A 39ºC"
+      },
+      {
+        "nombre": "HIPOTENSO",
+        "significado": "BAJA PRESIÓN ARTERIAL",
+        "ejemplos": "PRESIÓN SISTÓLICA MENOR A 90 mm Hg O PRESIÓN DIASTÓLICA MENOR A 60 mm HG"
+      },
+      {
+        "nombre": "HIPERTENSO",
+        "significado": "ALTA PRESIÓN ARTERIAL",
+        "ejemplos": "PRESIÓN SISTÓLICA MAYOR A 130 mm Hg O PRESIÓN DIASTÓLICA MAYOR A 80 mm Hg"
+      }
+    ]
+  },
+  {
+    "categoria": "NEUROLÓGICA",
+    "estados": [
+      {
+        "nombre": "AFASIA",
+        "significado": "TRASTORNO DEL LENGUAJE QUE SE CARACTERIZA POR LA INCAPACIDAD O LA DIFICULTAD DE COMUNICARSE MEDIANTE EL HABLA, LA ESCRITURA O LA MÍMICA",
+        "ejemplos": "AFASIA EXPRESIVA"
+      },
+      {
+        "nombre": "AGNOSIA",
+        "significado": "ES LA INCAPACIDAD PARA RECONOCER PERSONAS O COSAS A TRAVÉS DE UN SENTIDO O VARIOS",
+        "ejemplos": "AGNOSIA VISUALAGNOSIA AUDITIVAAGNOSIA TÁCTIL"
+      },
+      {
+        "nombre": "ANOMIA",
+        "significado": "TRASTORNO DEL LENGUAJE QUE SE CARACTERIZA POR LA INCAPACIDAD O LA DIFICULTAD DE RECONOCER O RECORDAR LOS NOMBRES DE LAS COSAS",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "APRAXIA",
+        "significado": "TRASTORNO NEUROLÓGICO CARACTERIZADO POR LA PÉRDIDA DE LA CAPACIDAD DE LLEVAR A CABO MOVIMIENTOS DE PROPÓSITO, A PESAR DE TENER LA CAPACIDAD FÍSICA",
+        "ejemplos": "APRAXIA IDEACIONALAPRAXIA CONSTRUCTIONALAPRAXIA IDEOMOTORAAPRAXIA OCULOMOTOR"
+      },
+      {
+        "nombre": "DISARTRIA",
+        "significado": "DIFICULTAD PARA ARTICULAR SONIDOS Y PALABRAS CAUSADA POR UNA PARÁLISIS O UNA ATAXIA DE LOS CENTROS NERVIOSOS QUE RIGEN LOS ÓRGANOS FONATORIOS",
+        "ejemplos": "ALTERACIÓN EN LA ARTICULACIÓN DE LAS PALABRAS"
+      },
+      {
+        "nombre": "CRISIS COMICIAL",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "SÍNCOPE",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "CEFALEA",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "VERBORREA",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "NIVEL CONCIENCIA",
+    "estados": [
+      {
+        "nombre": "ALERTA",
+        "significado": "QUE ESTÁ EN ACTITUD ALERTA O VIGILANTE",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "COMATOSO",
+        "significado": "ESTADO MÓRBIDO EN QUE LA CONCIENCIA Y LA MOTILIDAD SE ENCUENTRAN COMPLETAMENTE SUSPENDIDAS",
+        "ejemplos": "ESTADO DE COMA"
+      },
+      {
+        "nombre": "ESTUPOR",
+        "significado": "ESTADO DE INCONSCIENCIA PARCIAL CARACTERIZADO POR UNA DISMINUCIÓN DE LA ACTIVIDAD DE LAS FUNCIONES MENTALES Y FÍSICAS Y DE LA CAPACIDAD DE RESPUESTA A LOS ESTÍMULOS",
+        "ejemplos": "ADORMECIMIENTO, LETARGO, EMBOTAMIENTO"
+      },
+      {
+        "nombre": "OBNUBILADO",
+        "significado": "DISMINUCIÓN DEL NIVEL DE CONCIENCIA QUE SE CARACTERIZA POR LA EXISTENCIA DE CONFUSIÓN,TORPEZA DE MOVIMIENTOS, DISMINUCIÓN DE LA ATENCIÓN Y LENTITUD PSÍQUICA",
+        "ejemplos": "FALTA DE CONCENTRACIÓN, COMPRENSIÓN DIFICULTADA, CONFUSIÓN"
+      },
+      {
+        "nombre": "LENTITUD DE RESPUESTA",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  },
+  {
+    "categoria": "INESPECÍFICO",
+    "estados": [
+      {
+        "nombre": "MAL ESTAR GENERAL",
+        "significado": "CONJUNTO DE SIGNOS INESPECÍFICOS DE MOLESTIA, ENFERMEDAD O FALTA DE BIENESTAR",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "BUEN ESTADO GENERAL",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "DOLOR",
+        "significado": "",
+        "ejemplos": ""
+      },
+      {
+        "nombre": "DOLOR FANTASMA",
+        "significado": "",
+        "ejemplos": ""
+      }
+    ]
+  }
+]
