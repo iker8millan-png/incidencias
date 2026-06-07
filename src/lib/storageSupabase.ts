@@ -63,6 +63,36 @@ type IncidenciaRow = {
   created_at: string
 }
 
+type IncidenciaInsertRow = Omit<IncidenciaRow, 'created_at'>
+
+const INCIDENCIA_PERIOD_COLUMNS = [
+  'dieta_desde',
+  'dieta_hasta',
+  'dieta_fecha',
+  'tratamiento_desde',
+  'tratamiento_hasta',
+  'tratamiento_fecha',
+  'proceso_desde',
+  'proceso_hasta',
+  'proceso_fecha',
+] as const
+
+function pickLegacyPeriod(data: Omit<Incidencia, 'id' | 'createdAt'>): { desde: string; hasta: string } {
+  const desde =
+    data.tratamientoDesde.trim() ||
+    data.dietaDesde.trim() ||
+    data.procesoDesde.trim()
+  const hasta =
+    data.tratamientoHasta.trim() ||
+    data.dietaHasta.trim() ||
+    data.procesoHasta.trim()
+  return { desde, hasta }
+}
+
+function isMissingColumnError(message: string): boolean {
+  return /schema cache|does not exist|could not find the/i.test(message)
+}
+
 function rowToPersona(row: PersonaRow): Persona {
   return normalizePersona({
     id: row.id,
@@ -139,7 +169,7 @@ function rowToIncidencia(row: IncidenciaRow): Incidencia {
 function incidenciaToRow(
   data: Omit<Incidencia, 'id' | 'createdAt'>,
   id?: string,
-): Omit<IncidenciaRow, 'created_at'> {
+): IncidenciaInsertRow {
   return {
     ...(id ? { id } : { id: crypto.randomUUID() }),
     persona_id: data.personaId,
@@ -160,12 +190,10 @@ function incidenciaToRow(
     dieta_otros: data.dietaOtros ?? '',
     dieta_desde: data.dietaDesde ?? '',
     dieta_hasta: data.dietaHasta ?? '',
-    dieta_fecha: '',
     tratamiento: normalizeTratamientos(data.tratamiento),
     tratamiento_otros: data.tratamientoOtros ?? '',
     tratamiento_desde: data.tratamientoDesde ?? '',
     tratamiento_hasta: data.tratamientoHasta ?? '',
-    tratamiento_fecha: '',
     tratamiento_otros_horas: normalizeHoras(data.tratamientoOtrosHoras).filter(Boolean),
     tratamiento_otros_hora: normalizeHoras(data.tratamientoOtrosHoras)[0] ?? '',
     tratamiento_otros_forma: data.tratamientoOtrosForma ?? '',
@@ -174,9 +202,6 @@ function incidenciaToRow(
     proceso_otros: data.procesoOtros ?? '',
     proceso_desde: data.procesoDesde ?? '',
     proceso_hasta: data.procesoHasta ?? '',
-    proceso_fecha: '',
-    desde: '',
-    hasta: '',
     ctes_p: data.ctesP ?? '',
     ctes_t: data.ctesT ?? '',
     ctes_s: data.ctesS ?? '',
@@ -187,7 +212,24 @@ function incidenciaToRow(
     firma: data.firma ?? '',
     firma_dibujo: data.firmaDibujo ?? '',
     created_by: data.createdBy || null,
+  } as IncidenciaInsertRow
+}
+
+function incidenciaToLegacyRow(
+  data: Omit<Incidencia, 'id' | 'createdAt'>,
+  id?: string,
+): Record<string, unknown> {
+  const row = incidenciaToRow(data, id)
+  const legacy: Record<string, unknown> = { ...row }
+  for (const key of INCIDENCIA_PERIOD_COLUMNS) {
+    delete legacy[key]
   }
+  delete legacy.tratamiento_otros_horas
+
+  const periodo = pickLegacyPeriod(data)
+  legacy.desde = periodo.desde
+  legacy.hasta = periodo.hasta
+  return legacy
 }
 
 function client() {
@@ -195,9 +237,18 @@ function client() {
   return supabase
 }
 
+function supabaseErrorMessage(message: string): string {
+  if (/schema cache|dieta_desde|dieta_hasta|tratamiento_desde|proceso_desde/i.test(message)) {
+    return (
+      'La base de datos de Supabase no está actualizada. En el SQL Editor del proyecto ejecuta el archivo supabase/migration-fechas-apartados.sql y vuelve a intentarlo.'
+    )
+  }
+  return message
+}
+
 async function ensureAuthenticated(): Promise<void> {
   const { data, error } = await client().auth.getSession()
-  if (error) throw new Error(error.message)
+  if (error) throw new Error(supabaseErrorMessage(error.message))
   if (!data.session) {
     throw new Error('Sesión expirada. Cierra sesión e inicia sesión de nuevo para sincronizar datos.')
   }
@@ -212,7 +263,7 @@ export async function getPersonasFromSupabase(): Promise<Persona[]> {
     .order('ala')
     .order('codigo')
 
-  if (error) throw new Error(error.message)
+  if (error) throw new Error(supabaseErrorMessage(error.message))
   return (data as PersonaRow[]).map(rowToPersona)
 }
 
@@ -230,7 +281,7 @@ export async function savePersonaToSupabase(
       .select('*')
       .single()
 
-    if (error) throw new Error(error.message)
+    if (error) throw new Error(supabaseErrorMessage(error.message))
     return rowToPersona(data as PersonaRow)
   }
 
@@ -249,14 +300,14 @@ export async function savePersonaToSupabase(
     .select('*')
     .single()
 
-  if (error) throw new Error(error.message)
+  if (error) throw new Error(supabaseErrorMessage(error.message))
   return rowToPersona(data as PersonaRow)
 }
 
 export async function deletePersonaFromSupabase(id: string): Promise<void> {
   await ensureAuthenticated()
   const { error } = await client().from('personas').delete().eq('id', id)
-  if (error) throw new Error(error.message)
+  if (error) throw new Error(supabaseErrorMessage(error.message))
 }
 
 export async function getIncidenciasFromSupabase(): Promise<Incidencia[]> {
@@ -267,7 +318,7 @@ export async function getIncidenciasFromSupabase(): Promise<Incidencia[]> {
     .select('*')
     .order('created_at', { ascending: false })
 
-  if (error) throw new Error(error.message)
+  if (error) throw new Error(supabaseErrorMessage(error.message))
   return (data as IncidenciaRow[]).map(rowToIncidencia)
 }
 
@@ -275,13 +326,19 @@ export async function createIncidenciaInSupabase(
   data: Omit<Incidencia, 'id' | 'createdAt'>,
 ): Promise<Incidencia> {
   await ensureAuthenticated()
+  const db = client()
   const row = incidenciaToRow(data)
-  const { data: inserted, error } = await client()
-    .from('incidencias')
-    .insert(row)
-    .select('*')
-    .single()
 
-  if (error) throw new Error(error.message)
-  return rowToIncidencia(inserted as IncidenciaRow)
+  const { data: inserted, error } = await db.from('incidencias').insert(row).select('*').single()
+
+  if (!error) return rowToIncidencia(inserted as IncidenciaRow)
+
+  if (isMissingColumnError(error.message)) {
+    const legacyRow = incidenciaToLegacyRow(data)
+    const retry = await db.from('incidencias').insert(legacyRow).select('*').single()
+    if (!retry.error) return rowToIncidencia(retry.data as IncidenciaRow)
+    throw new Error(supabaseErrorMessage(retry.error.message))
+  }
+
+  throw new Error(supabaseErrorMessage(error.message))
 }

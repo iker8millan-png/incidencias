@@ -11,6 +11,13 @@
 2. Copia y pega el contenido de [`schema.sql`](./schema.sql).
 3. Pulsa **Run**.
 
+Si la tabla `incidencias` **ya existía** de una versión anterior, ejecuta también las migraciones en este orden:
+
+1. [`migration-fechas-apartados.sql`](./migration-fechas-apartados.sql) — columnas Desde/Hasta por apartado
+2. [`migration-tratamiento-horas.sql`](./migration-tratamiento-horas.sql) — horas múltiples en tratamiento (si aplica)
+
+Sin estas migraciones verás errores como *Could not find the 'dieta_desde' column in the schema cache* al registrar incidencias.
+
 Esto crea:
 
 - Tabla `personas`
