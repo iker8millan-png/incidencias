@@ -1,36 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { Incidencia, Persona } from '../types'
 import { getIncidencias, getPersonas } from '../lib/storage'
-import { isSupabaseConfigured, supabase } from '../lib/supabase'
-
-function useRemoteSync(reload: () => void, table: 'personas' | 'incidencias') {
-  useEffect(() => {
-    if (!isSupabaseConfigured || !supabase) return
-
-    const channel = supabase
-      .channel(`sync-${table}`)
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table },
-        () => reload(),
-      )
-      .subscribe()
-
-    const refreshOnVisible = () => reload()
-    const onVisibilityChange = () => {
-      if (document.visibilityState === 'visible') refreshOnVisible()
-    }
-
-    window.addEventListener('focus', refreshOnVisible)
-    document.addEventListener('visibilitychange', onVisibilityChange)
-
-    return () => {
-      if (supabase) void supabase.removeChannel(channel)
-      window.removeEventListener('focus', refreshOnVisible)
-      document.removeEventListener('visibilitychange', onVisibilityChange)
-    }
-  }, [reload, table])
-}
+import { subscribeStorageSync } from '../lib/storageSync'
 
 export function usePersonas(refreshKey = 0) {
   const [personas, setPersonas] = useState<Persona[]>([])
@@ -65,7 +36,7 @@ export function usePersonas(refreshKey = 0) {
     }
   }, [refreshKey, reload])
 
-  useRemoteSync(reload, 'personas')
+  useEffect(() => subscribeStorageSync('personas', reload), [reload])
 
   return { personas, loading, error, reload }
 }
@@ -103,7 +74,7 @@ export function useIncidencias(refreshKey = 0) {
     }
   }, [refreshKey, reload])
 
-  useRemoteSync(reload, 'incidencias')
+  useEffect(() => subscribeStorageSync('incidencias', reload), [reload])
 
   return { incidencias, loading, error, reload }
 }
