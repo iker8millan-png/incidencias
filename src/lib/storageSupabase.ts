@@ -311,6 +311,12 @@ export async function deletePersonaFromSupabase(id: string): Promise<void> {
   if (error) throw new Error(supabaseErrorMessage(error.message))
 }
 
+export async function deleteIncidenciaFromSupabase(id: string): Promise<void> {
+  await ensureAuthenticated()
+  const { error } = await client().from('incidencias').delete().eq('id', id)
+  if (error) throw new Error(supabaseErrorMessage(error.message))
+}
+
 export async function getIncidenciasFromSupabase(): Promise<Incidencia[]> {
   await ensureAuthenticated()
 

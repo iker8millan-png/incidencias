@@ -13,9 +13,12 @@ export type AreaCode =
   | 'A.R'
   | 'A.CO'
 
+export type UserRole = 'staff' | 'admin'
+
 export interface AuthSession {
   workerId: string
   displayName: string
+  role?: UserRole
 }
 
 export type Ala = '1' | '2'

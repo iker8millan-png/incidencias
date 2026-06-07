@@ -1,6 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { Pencil, Plus, Trash2, UserRound } from 'lucide-react'
 import type { Ala, Persona } from '../types'
+import { useAuth } from '../context/AuthContext'
 import { ALAS, formatUbicacion, groupPersonasPorAla } from '../lib/habitaciones'
 import { deletePersona, savePersona } from '../lib/storage'
 import { usePersonas } from '../hooks/useStorageData'
@@ -17,10 +18,12 @@ const emptyForm = (): FormData => ({ codigo: '', ala: '1', habitacion: '' })
 
 function PersonasAlaTable({
   personas,
+  isAdmin,
   onEdit,
   onDelete,
 }: {
   personas: Persona[]
+  isAdmin: boolean
   onEdit: (p: Persona) => void
   onDelete: (id: string, codigo: string) => void
 }) {
@@ -32,7 +35,7 @@ function PersonasAlaTable({
             <tr>
               <th className="px-4 py-3 font-medium">Código</th>
               <th className="px-4 py-3 font-medium">Hab.</th>
-              <th className="px-4 py-3 font-medium text-right">Acciones</th>
+              {isAdmin && <th className="px-4 py-3 font-medium text-right">Acciones</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -45,21 +48,23 @@ function PersonasAlaTable({
                   </span>
                 </td>
                 <td className="px-4 py-3 text-slate-600">{p.habitacion}</td>
-                <td className="px-4 py-3">
-                  <div className="flex justify-end gap-1">
-                    <Button variant="ghost" size="sm" onClick={() => onEdit(p)}>
-                      <Pencil size={14} />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-red-600 hover:bg-red-50"
-                      onClick={() => onDelete(p.id, p.codigo)}
-                    >
-                      <Trash2 size={14} />
-                    </Button>
-                  </div>
-                </td>
+                {isAdmin && (
+                  <td className="px-4 py-3">
+                    <div className="flex justify-end gap-1">
+                      <Button variant="ghost" size="sm" onClick={() => onEdit(p)}>
+                        <Pencil size={14} />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-600 hover:bg-red-50"
+                        onClick={() => onDelete(p.id, p.codigo)}
+                      >
+                        <Trash2 size={14} />
+                      </Button>
+                    </div>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -70,6 +75,7 @@ function PersonasAlaTable({
 }
 
 export function PersonasPage() {
+  const { isAdmin } = useAuth()
   const [refresh, setRefresh] = useState(0)
   const { personas, loading, error: loadError } = usePersonas(refresh)
   const porAla = useMemo(() => groupPersonasPorAla(personas), [personas])
@@ -82,6 +88,7 @@ export function PersonasPage() {
   }
 
   function startEdit(p: Persona) {
+    if (!isAdmin) return
     setForm({
       id: p.id,
       codigo: p.codigo,
@@ -100,6 +107,7 @@ export function PersonasPage() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (editing && !isAdmin) return
     setError('')
     void savePersona(form)
       .then(() => {
@@ -144,6 +152,7 @@ export function PersonasPage() {
             {editing ? 'Editar persona' : 'Nueva persona'}
           </h2>
 
+          {editing && !isAdmin ? null : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <Field label="Código" required hint="Identificador anónimo (ej. P006). No uses el nombre del paciente.">
               <input
@@ -196,6 +205,7 @@ export function PersonasPage() {
               )}
             </div>
           </form>
+          )}
         </Card>
 
         <div className="space-y-6 lg:col-span-3">
@@ -217,7 +227,12 @@ export function PersonasPage() {
                       ({lista.length} persona{lista.length === 1 ? '' : 's'})
                     </span>
                   </SectionTitle>
-                  <PersonasAlaTable personas={lista} onEdit={startEdit} onDelete={handleDelete} />
+                  <PersonasAlaTable
+                    personas={lista}
+                    isAdmin={isAdmin}
+                    onEdit={startEdit}
+                    onDelete={handleDelete}
+                  />
                 </section>
               )
             })

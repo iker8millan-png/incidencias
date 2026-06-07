@@ -10,13 +10,30 @@ function getAppPassword(): string {
   return password
 }
 
+function getAdminPassword(): string {
+  return (import.meta.env.VITE_ADMIN_PASSWORD as string | undefined)?.trim() ?? ''
+}
+
 export function isLocalAuthConfigured(): boolean {
   return getAppPassword().length > 0
+}
+
+export function isAdminAuthConfigured(): boolean {
+  return getAdminPassword().length > 0
+}
+
+export function isAdminSession(session: AuthSession | null | undefined): boolean {
+  return session?.role === 'admin'
 }
 
 const CENTRO_SESSION: AuthSession = {
   workerId: 'centro',
   displayName: 'Personal del centro',
+  role: 'staff',
+}
+
+function persistSession(session: AuthSession): void {
+  localStorage.setItem(SESSION_KEY, JSON.stringify(session))
 }
 
 /** Email del usuario en Supabase Auth (Authentication → Users). */
@@ -39,8 +56,9 @@ export async function login(password: string): Promise<AuthSession> {
       workerId: data.user.id,
       displayName:
         (data.user.user_metadata?.displayName as string) || CENTRO_SESSION.displayName,
+      role: 'staff',
     }
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+    persistSession(session)
     return session
   }
 
@@ -52,15 +70,39 @@ export async function login(password: string): Promise<AuthSession> {
     throw new Error('Contraseña incorrecta')
   }
 
-  localStorage.setItem(SESSION_KEY, JSON.stringify(CENTRO_SESSION))
-  return CENTRO_SESSION
+  const session: AuthSession = { ...CENTRO_SESSION, role: 'staff' }
+  persistSession(session)
+  return session
+}
+
+export async function loginAsAdmin(
+  centerPassword: string,
+  adminPassword: string,
+): Promise<AuthSession> {
+  const expectedAdmin = getAdminPassword()
+  if (!expectedAdmin) {
+    throw new Error('Acceso de administrador no configurado.')
+  }
+  if (adminPassword !== expectedAdmin) {
+    throw new Error('Contraseña de administrador incorrecta')
+  }
+
+  const session = await login(centerPassword)
+  const adminSession: AuthSession = {
+    ...session,
+    displayName: 'Administrador',
+    role: 'admin',
+  }
+  persistSession(adminSession)
+  return adminSession
 }
 
 export function getSession(): AuthSession | null {
   try {
     const raw = localStorage.getItem(SESSION_KEY)
     if (!raw) return null
-    return JSON.parse(raw) as AuthSession
+    const session = JSON.parse(raw) as AuthSession
+    return { ...session, role: session.role ?? 'staff' }
   } catch {
     return null
   }

@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from 'react'
 import type { AuthSession } from '../types'
-import { getSession, login as authLogin, logout as authLogout } from '../lib/auth'
+import { getSession, login as authLogin, loginAsAdmin as authLoginAsAdmin, logout as authLogout } from '../lib/auth'
 import { getSupabase, isSupabaseConfigured } from '../lib/supabase'
 import type { SupabaseClient } from '@supabase/supabase-js'
 
@@ -17,20 +17,28 @@ const SESSION_KEY = 'appincidencias_session'
 interface AuthContextValue {
   session: AuthSession | null
   loading: boolean
+  isAdmin: boolean
   login: (password: string) => Promise<void>
+  loginAsAdmin: (centerPassword: string, adminPassword: string) => Promise<void>
   logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
-function sessionFromSupabaseUser(user: {
-  id: string
-  user_metadata?: Record<string, unknown>
-}): AuthSession {
+function sessionFromSupabaseUser(
+  user: {
+    id: string
+    user_metadata?: Record<string, unknown>
+  },
+  role: AuthSession['role'] = 'staff',
+): AuthSession {
   return {
     workerId: user.id,
     displayName:
-      (user.user_metadata?.displayName as string | undefined) || 'Personal del centro',
+      role === 'admin'
+        ? 'Administrador'
+        : (user.user_metadata?.displayName as string | undefined) || 'Personal del centro',
+    role,
   }
 }
 
@@ -74,7 +82,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return
       }
 
-      const next = sessionFromSupabaseUser(data.session.user)
+      const stored = getSession()
+      const role = stored?.role === 'admin' ? 'admin' : 'staff'
+      const next = sessionFromSupabaseUser(data.session.user, role)
       persistSession(next)
       setSession(next)
       setLoading(false)
@@ -88,7 +98,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (cancelled) return
 
       if (authSession?.user) {
-        const next = sessionFromSupabaseUser(authSession.user)
+        const stored = getSession()
+        const role = stored?.role === 'admin' ? 'admin' : 'staff'
+        const next = sessionFromSupabaseUser(authSession.user, role)
         persistSession(next)
         setSession(next)
       } else {
@@ -109,14 +121,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSession(next)
   }, [])
 
+  const loginAsAdmin = useCallback(async (centerPassword: string, adminPassword: string) => {
+    const next = await authLoginAsAdmin(centerPassword, adminPassword)
+    setSession(next)
+  }, [])
+
   const logout = useCallback(async () => {
     await authLogout()
     setSession(null)
   }, [])
 
   const value = useMemo(
-    () => ({ session, loading, login, logout }),
-    [session, loading, login, logout],
+    () => ({
+      session,
+      loading,
+      isAdmin: session?.role === 'admin',
+      login,
+      loginAsAdmin,
+      logout,
+    }),
+    [session, loading, login, loginAsAdmin, logout],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

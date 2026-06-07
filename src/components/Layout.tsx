@@ -16,7 +16,7 @@ const nav = [
 ]
 
 export function Layout() {
-  const { session, logout } = useAuth()
+  const { session, logout, isAdmin } = useAuth()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
 
@@ -89,6 +89,11 @@ export function Layout() {
               <span className="max-w-[8rem] truncate text-xs font-semibold text-brand-900/80">
                 {session?.displayName}
               </span>
+              {isAdmin && (
+                <span className="rounded-md bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-900">
+                  Admin
+                </span>
+              )}
             </div>
             <Button variant="ghost" size="sm" onClick={handleLogout} className="rounded-xl">
               <LogOut size={16} />

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Download, FileSpreadsheet, Search, X } from 'lucide-react'
+import { Download, FileSpreadsheet, Search, Trash2, X } from 'lucide-react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import type { Incidencia, IncidenciaFilters, Persona, Ala } from '../types'
+import { useAuth } from '../context/AuthContext'
 import { AREAS, TURNOS, areaLabel, formatDate, formatDateTime, turnoLabel } from '../lib/constants'
 import { ALAS } from '../lib/habitaciones'
 import {
@@ -27,7 +28,7 @@ import { PersonaSelect } from '../components/PersonaSelect'
 import { TratamientoFilter } from '../components/TratamientoFilter'
 import { PrioridadBadge } from '../components/PrioridadTags'
 import { exportIncidenciasExcel, exportIncidenciasPdf } from '../lib/export'
-import { filterIncidencias } from '../lib/storage'
+import { filterIncidencias, deleteIncidencia } from '../lib/storage'
 import { useIncidencias, usePersonas } from '../hooks/useStorageData'
 import {
   Badge,
@@ -66,12 +67,16 @@ function IncidenciaCard({
   open,
   onToggle,
   highlight,
+  isAdmin,
+  onDelete,
 }: {
   item: Incidencia
   persona?: Persona
   open: boolean
   onToggle: () => void
   highlight?: ListadoConceptoCampo
+  isAdmin: boolean
+  onDelete: (id: string) => void
 }) {
   const destacado = highlight
     ? highlight === 'tratamiento'
@@ -132,6 +137,19 @@ function IncidenciaCard({
       {open && (
         <div className="border-t border-slate-100 bg-gradient-to-b from-slate-50/80 to-white px-5 py-4 text-sm animate-fade-up">
           <IncidenciaDetalle item={item} persona={persona} />
+          {isAdmin && (
+            <div className="mt-4 flex justify-end border-t border-slate-100 pt-4">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="text-red-600 hover:bg-red-50 hover:text-red-700"
+                onClick={() => onDelete(item.id)}
+              >
+                <Trash2 size={14} />
+                Eliminar incidencia
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </Card>
@@ -139,6 +157,7 @@ function IncidenciaCard({
 }
 
 export function ListadoPage() {
+  const { isAdmin } = useAuth()
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const tipo = parseListadoTipo(searchParams.get('tipo'))
@@ -184,6 +203,15 @@ export function ListadoPage() {
   }, [allIncidencias, filters, personas, tipo, campo, concepto])
 
   const personaMap = useMemo(() => new Map(personas.map((p) => [p.id, p])), [personas])
+
+  function handleDeleteIncidencia(id: string) {
+    if (!isAdmin) return
+    if (!confirm('¿Eliminar esta incidencia? Esta acción no se puede deshacer.')) return
+    void deleteIncidencia(id).then(() => {
+      setExpandedId((current) => (current === id ? null : current))
+      setRefreshKey((k) => k + 1)
+    })
+  }
 
   function patchFilter<K extends keyof IncidenciaFilters>(key: K, value: IncidenciaFilters[K]) {
     setFilters((prev) => {
@@ -428,7 +456,9 @@ export function ListadoPage() {
                 persona={persona}
                 open={open}
                 highlight={campo}
+                isAdmin={isAdmin}
                 onToggle={() => setExpandedId(open ? null : item.id)}
+                onDelete={handleDeleteIncidencia}
               />
             )
           })}

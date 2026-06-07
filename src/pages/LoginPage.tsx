@@ -1,28 +1,57 @@
 import { useState, type FormEvent } from 'react'
-import { ClipboardList, Lock, Sparkles } from 'lucide-react'
+import { ArrowLeft, ClipboardList, Lock, Shield, Sparkles } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
-import { isLocalAuthConfigured, isUsingLocalMode } from '../lib/auth'
+import { isAdminAuthConfigured, isLocalAuthConfigured, isUsingLocalMode } from '../lib/auth'
 import { APP_TITLE, COMPANY_NAME } from '../lib/constants'
 import { Logo } from '../components/Logo'
 import { Button, Card, Field, inputClass } from '../components/ui'
 
+type LoginMode = 'staff' | 'admin'
+
 export function LoginPage() {
-  const { login } = useAuth()
-  const [password, setPassword] = useState('')
+  const { login, loginAsAdmin } = useAuth()
+  const [mode, setMode] = useState<LoginMode>('staff')
+  const [centerPassword, setCenterPassword] = useState('')
+  const [adminPassword, setAdminPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleStaffSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
     setLoading(true)
     try {
-      await login(password)
+      await login(centerPassword)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al iniciar sesión')
     } finally {
       setLoading(false)
     }
+  }
+
+  async function handleAdminSubmit(e: FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      await loginAsAdmin(centerPassword, adminPassword)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al iniciar sesión')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function openAdminMode() {
+    setMode('admin')
+    setAdminPassword('')
+    setError('')
+  }
+
+  function backToStaff() {
+    setMode('staff')
+    setAdminPassword('')
+    setError('')
   }
 
   return (
@@ -40,8 +69,7 @@ export function LoginPage() {
             {APP_TITLE}
           </h1>
           <p className="mt-5 max-w-sm text-center text-base leading-relaxed text-white/75">
-            Protocolo digital con formulario por pasos, filtros y exportación. Cada registro es
-            permanente.
+            Protocolo digital con formulario por pasos, filtros y exportación.
           </p>
         </div>
 
@@ -51,7 +79,7 @@ export function LoginPage() {
             Turnos M · T · N · áreas DE → A
           </p>
           <p className="text-sm leading-relaxed text-white/65">
-            Estado · incidencia · lesiones · caídas · hospital · tratamientos · constantes
+            El personal registra incidencias. El administrador puede modificar y eliminar registros.
           </p>
         </div>
       </div>
@@ -71,49 +99,136 @@ export function LoginPage() {
             <h1 className="font-serif mt-2 text-xl font-semibold tracking-wide text-brand-800">
               {APP_TITLE}
             </h1>
-            <p className="mt-1 text-sm text-brand-700/60">Acceso para personal del centro</p>
           </div>
 
           <Card className="border-brand-100/80 shadow-[var(--shadow-float)]">
-            <div className="mb-6 hidden lg:block">
-              <h2 className="font-serif text-xl font-semibold text-brand-900">Iniciar sesión</h2>
-              <p className="mt-1 text-sm text-brand-700/60">
-                Introduce la contraseña compartida del centro
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <Field label="Contraseña" htmlFor="password" required>
-                <div className="relative">
-                  <Lock
-                    size={16}
-                    className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-300"
-                  />
-                  <input
-                    id="password"
-                    type="password"
-                    className={`${inputClass} pl-10`}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
-                    placeholder="Contraseña del centro"
-                    required
-                  />
+            {mode === 'staff' ? (
+              <>
+                <div className="mb-6">
+                  <h2 className="font-serif text-xl font-semibold text-brand-900">Iniciar sesión</h2>
+                  <p className="mt-1 text-sm text-brand-700/60">
+                    Introduce la contraseña compartida del centro
+                  </p>
                 </div>
-              </Field>
 
-              {error && (
-                <p className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm font-medium text-red-700">
-                  {error}
-                </p>
-              )}
+                <form onSubmit={handleStaffSubmit} className="space-y-5">
+                  <Field label="Contraseña" htmlFor="center-password" required>
+                    <div className="relative">
+                      <Lock
+                        size={16}
+                        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-300"
+                      />
+                      <input
+                        id="center-password"
+                        type="password"
+                        className={`${inputClass} pl-10`}
+                        value={centerPassword}
+                        onChange={(e) => setCenterPassword(e.target.value)}
+                        autoComplete="current-password"
+                        placeholder="Contraseña del centro"
+                        required
+                      />
+                    </div>
+                  </Field>
 
-              <Button type="submit" size="lg" className="w-full" disabled={loading}>
-                {loading ? 'Entrando…' : 'Entrar'}
-              </Button>
-            </form>
+                  {error && (
+                    <p className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm font-medium text-red-700">
+                      {error}
+                    </p>
+                  )}
 
-            {isUsingLocalMode() && !isLocalAuthConfigured() && (
+                  <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                    {loading ? 'Entrando…' : 'Entrar'}
+                  </Button>
+                </form>
+
+                {isAdminAuthConfigured() && (
+                  <div className="mt-5 border-t border-slate-100 pt-5">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="lg"
+                      className="w-full"
+                      onClick={openAdminMode}
+                    >
+                      <Shield size={16} />
+                      Acceder como admin
+                    </Button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="mb-6">
+                  <button
+                    type="button"
+                    onClick={backToStaff}
+                    className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-brand-700 hover:text-brand-900"
+                  >
+                    <ArrowLeft size={14} />
+                    Volver
+                  </button>
+                  <h2 className="font-serif text-xl font-semibold text-brand-900">
+                    Acceso de administrador
+                  </h2>
+                  <p className="mt-1 text-sm text-brand-700/60">
+                    Contraseña del centro y contraseña de administrador
+                  </p>
+                </div>
+
+                <form onSubmit={handleAdminSubmit} className="space-y-5">
+                  <Field label="Contraseña del centro" htmlFor="admin-center-password" required>
+                    <div className="relative">
+                      <Lock
+                        size={16}
+                        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-300"
+                      />
+                      <input
+                        id="admin-center-password"
+                        type="password"
+                        className={`${inputClass} pl-10`}
+                        value={centerPassword}
+                        onChange={(e) => setCenterPassword(e.target.value)}
+                        autoComplete="current-password"
+                        placeholder="Contraseña del centro"
+                        required
+                      />
+                    </div>
+                  </Field>
+
+                  <Field label="Contraseña de administrador" htmlFor="admin-password" required>
+                    <div className="relative">
+                      <Shield
+                        size={16}
+                        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-300"
+                      />
+                      <input
+                        id="admin-password"
+                        type="password"
+                        className={`${inputClass} pl-10`}
+                        value={adminPassword}
+                        onChange={(e) => setAdminPassword(e.target.value)}
+                        autoComplete="off"
+                        placeholder="Contraseña de admin"
+                        required
+                      />
+                    </div>
+                  </Field>
+
+                  {error && (
+                    <p className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm font-medium text-red-700">
+                      {error}
+                    </p>
+                  )}
+
+                  <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                    {loading ? 'Entrando…' : 'Entrar como administrador'}
+                  </Button>
+                </form>
+              </>
+            )}
+
+            {isUsingLocalMode() && !isLocalAuthConfigured() && mode === 'staff' && (
               <div className="mt-6 rounded-xl border border-amber-200/80 bg-amber-50 px-4 py-3.5">
                 <p className="flex items-center gap-1.5 text-xs font-bold text-amber-900">
                   <Sparkles size={14} />
