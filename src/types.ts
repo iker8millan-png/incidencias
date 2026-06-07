@@ -67,18 +67,19 @@ export interface Incidencia {
   hospitalRegr: boolean
   dieta: string[]
   dietaOtros: string
-  dietaFecha: string
+  dietaDesde: string
+  dietaHasta: string
   tratamiento: TratamientoRegistro[]
   tratamientoOtros: string
-  tratamientoFecha: string
+  tratamientoDesde: string
+  tratamientoHasta: string
   tratamientoOtrosHoras: string[]
   tratamientoOtrosForma: FormaAdministracion
   tratamientoOtrosFormaOtros: string
   proceso: string[]
   procesoOtros: string
-  procesoFecha: string
-  desde: string
-  hasta: string
+  procesoDesde: string
+  procesoHasta: string
   ctesP: string
   ctesT: string
   ctesS: string

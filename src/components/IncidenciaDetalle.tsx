@@ -1,4 +1,5 @@
 import type { Incidencia, Persona } from '../types'
+import { formatApartadoPeriodo } from '../lib/apartados'
 import { formatDate } from '../lib/constants'
 import { formatUbicacion } from '../lib/habitaciones'
 import { formatListaConOtros } from '../lib/listas'
@@ -44,22 +45,24 @@ export function IncidenciaDetalle({ item, persona }: IncidenciaDetalleProps) {
       <div>
         <dt className="text-xs text-slate-500">Dieta</dt>
         <dd>
-          {item.dietaFecha && (
-            <span className="mr-2 text-xs font-medium text-slate-500">
-              {formatDate(item.dietaFecha)} ·
-            </span>
-          )}
+          {(() => {
+            const periodo = formatApartadoPeriodo(item.dietaDesde, item.dietaHasta)
+            return periodo ? (
+              <span className="mr-2 text-xs font-medium text-slate-500">{periodo} ·</span>
+            ) : null
+          })()}
           {formatListaConOtros(item.dieta, item.dietaOtros) || '—'}
         </dd>
       </div>
       <div className="sm:col-span-2">
         <dt className="text-xs text-slate-500">Tratamiento</dt>
         <dd className="mt-1">
-          {item.tratamientoFecha && (
-            <p className="mb-1 text-xs font-medium text-slate-500">
-              Fecha: {formatDate(item.tratamientoFecha)}
-            </p>
-          )}
+          {(() => {
+            const periodo = formatApartadoPeriodo(item.tratamientoDesde, item.tratamientoHasta)
+            return periodo ? (
+              <p className="mb-1 text-xs font-medium text-slate-500">Periodo: {periodo}</p>
+            ) : null
+          })()}
           {item.tratamiento.length || item.tratamientoOtros.trim() ? (
             <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
               <table className="w-full min-w-[420px] text-sm">
@@ -115,11 +118,12 @@ export function IncidenciaDetalle({ item, persona }: IncidenciaDetalleProps) {
       <div className="sm:col-span-2">
         <dt className="text-xs text-slate-500">Proceso</dt>
         <dd>
-          {item.procesoFecha && (
-            <span className="mr-2 text-xs font-medium text-slate-500">
-              {formatDate(item.procesoFecha)} ·
-            </span>
-          )}
+          {(() => {
+            const periodo = formatApartadoPeriodo(item.procesoDesde, item.procesoHasta)
+            return periodo ? (
+              <span className="mr-2 text-xs font-medium text-slate-500">{periodo} ·</span>
+            ) : null
+          })()}
           {formatListaConOtros(item.proceso, item.procesoOtros) || '—'}
         </dd>
       </div>

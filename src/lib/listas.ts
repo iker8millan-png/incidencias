@@ -5,6 +5,14 @@ export function normalizeLista(valor: string | string[] | undefined): string[] {
   return []
 }
 
+const PROCESO_ALIASES: Record<string, string> = {
+  'TIRA DE ORINA +': 'TIRA DE ORINA',
+}
+
+export function normalizeProcesoLista(valor: string | string[] | undefined): string[] {
+  return normalizeLista(valor).map((nombre) => PROCESO_ALIASES[nombre] ?? nombre)
+}
+
 export function formatLista(valor: string | string[]): string {
   return normalizeLista(valor).join(' · ')
 }

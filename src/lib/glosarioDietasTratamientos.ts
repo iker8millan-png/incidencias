@@ -127,7 +127,7 @@ export const GLOSARIO_PROCESOS: GlosarioGrupo[] = [
     categoria: 'ANALÍTICAS Y MUESTRAS',
     items: [
       {
-        nombre: 'TIRA DE ORINA +',
+        nombre: 'TIRA DE ORINA',
         significado: 'Registro de tira reactiva de orina.',
         ejemplos: 'Comunicar a área sanitaria y registrar seguimiento.',
       },

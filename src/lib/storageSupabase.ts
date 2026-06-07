@@ -1,7 +1,6 @@
 import type { Incidencia, Persona, TratamientoRegistro } from '../types'
-import { normalizeEstados } from './estados'
 import { normalizePersona } from './habitaciones'
-import { normalizeLista } from './listas'
+import { normalizeIncidencia, type LegacyIncidenciaFields } from './normalizeIncidencia'
 import { supabase } from './supabase'
 import { normalizeHoras, normalizeTratamientos } from './tratamientos'
 
@@ -32,9 +31,13 @@ type IncidenciaRow = {
   hospital_regr: boolean
   dieta: string[]
   dieta_otros: string
+  dieta_desde: string
+  dieta_hasta: string
   dieta_fecha: string
   tratamiento: TratamientoRegistro[]
   tratamiento_otros: string
+  tratamiento_desde: string
+  tratamiento_hasta: string
   tratamiento_fecha: string
   tratamiento_otros_horas: string[]
   tratamiento_otros_hora: string
@@ -42,6 +45,8 @@ type IncidenciaRow = {
   tratamiento_otros_forma_otros: string
   proceso: string[]
   proceso_otros: string
+  proceso_desde: string
+  proceso_hasta: string
   proceso_fecha: string
   desde: string
   hasta: string
@@ -80,14 +85,14 @@ function personaToRow(input: Omit<Persona, 'id' | 'createdAt'> & { id?: string }
 }
 
 function rowToIncidencia(row: IncidenciaRow): Incidencia {
-  return {
+  return normalizeIncidencia({
     id: row.id,
     personaId: row.persona_id,
     fecha: row.fecha,
     turno: row.turno,
     de: row.de,
     a: row.a,
-    estado: normalizeEstados(row.estado),
+    estado: row.estado,
     estadoOtros: row.estado_otros ?? '',
     incidencia: row.incidencia ?? '',
     prioridad: row.prioridad ?? '',
@@ -96,20 +101,27 @@ function rowToIncidencia(row: IncidenciaRow): Incidencia {
     caidaAf: row.caida_af ?? false,
     hospitalTras: row.hospital_tras ?? false,
     hospitalRegr: row.hospital_regr ?? false,
-    dieta: normalizeLista(row.dieta),
+    dieta: row.dieta,
     dietaOtros: row.dieta_otros ?? '',
-    dietaFecha: row.dieta_fecha ?? '',
-    tratamiento: normalizeTratamientos(row.tratamiento),
+    dietaDesde: row.dieta_desde ?? '',
+    dietaHasta: row.dieta_hasta ?? '',
+    dietaFecha: row.dieta_fecha,
+    tratamiento: row.tratamiento,
     tratamientoOtros: row.tratamiento_otros ?? '',
-    tratamientoFecha: row.tratamiento_fecha ?? '',
-    tratamientoOtrosHoras: normalizeHoras(row.tratamiento_otros_horas, row.tratamiento_otros_hora),
+    tratamientoDesde: row.tratamiento_desde ?? '',
+    tratamientoHasta: row.tratamiento_hasta ?? '',
+    tratamientoFecha: row.tratamiento_fecha,
+    tratamientoOtrosHoras: row.tratamiento_otros_horas,
+    tratamientoOtrosHora: row.tratamiento_otros_hora,
     tratamientoOtrosForma: row.tratamiento_otros_forma ?? '',
     tratamientoOtrosFormaOtros: row.tratamiento_otros_forma_otros ?? '',
-    proceso: normalizeLista(row.proceso),
+    proceso: row.proceso,
     procesoOtros: row.proceso_otros ?? '',
-    procesoFecha: row.proceso_fecha ?? '',
-    desde: row.desde ?? '',
-    hasta: row.hasta ?? '',
+    procesoDesde: row.proceso_desde ?? '',
+    procesoHasta: row.proceso_hasta ?? '',
+    procesoFecha: row.proceso_fecha,
+    desde: row.desde,
+    hasta: row.hasta,
     ctesP: row.ctes_p ?? '',
     ctesT: row.ctes_t ?? '',
     ctesS: row.ctes_s ?? '',
@@ -121,7 +133,7 @@ function rowToIncidencia(row: IncidenciaRow): Incidencia {
     firmaDibujo: row.firma_dibujo ?? '',
     createdAt: row.created_at,
     createdBy: row.created_by ?? '',
-  }
+  } as Incidencia & LegacyIncidenciaFields)
 }
 
 function incidenciaToRow(
@@ -146,19 +158,25 @@ function incidenciaToRow(
     hospital_regr: data.hospitalRegr ?? false,
     dieta: data.dieta,
     dieta_otros: data.dietaOtros ?? '',
-    dieta_fecha: data.dietaFecha ?? '',
+    dieta_desde: data.dietaDesde ?? '',
+    dieta_hasta: data.dietaHasta ?? '',
+    dieta_fecha: '',
     tratamiento: normalizeTratamientos(data.tratamiento),
     tratamiento_otros: data.tratamientoOtros ?? '',
-    tratamiento_fecha: data.tratamientoFecha ?? '',
+    tratamiento_desde: data.tratamientoDesde ?? '',
+    tratamiento_hasta: data.tratamientoHasta ?? '',
+    tratamiento_fecha: '',
     tratamiento_otros_horas: normalizeHoras(data.tratamientoOtrosHoras).filter(Boolean),
     tratamiento_otros_hora: normalizeHoras(data.tratamientoOtrosHoras)[0] ?? '',
     tratamiento_otros_forma: data.tratamientoOtrosForma ?? '',
     tratamiento_otros_forma_otros: data.tratamientoOtrosFormaOtros ?? '',
     proceso: data.proceso,
     proceso_otros: data.procesoOtros ?? '',
-    proceso_fecha: data.procesoFecha ?? '',
-    desde: data.desde ?? '',
-    hasta: data.hasta ?? '',
+    proceso_desde: data.procesoDesde ?? '',
+    proceso_hasta: data.procesoHasta ?? '',
+    proceso_fecha: '',
+    desde: '',
+    hasta: '',
     ctes_p: data.ctesP ?? '',
     ctes_t: data.ctesT ?? '',
     ctes_s: data.ctesS ?? '',

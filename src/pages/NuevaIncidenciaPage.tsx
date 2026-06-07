@@ -19,7 +19,7 @@ import { PersonaSelect } from '../components/PersonaSelect'
 import { TratamientosEditor } from '../components/TratamientosEditor'
 import { PrioridadTags } from '../components/PrioridadTags'
 import { FirmaDibujoPad } from '../components/FirmaDibujoPad'
-import { ApartadoFecha } from '../components/ApartadoFecha'
+import { ApartadoPeriodo } from '../components/ApartadoPeriodo'
 import { Button, Callout, Card, Field, PageHeader, WizardSteps, inputClass, selectClass } from '../components/ui'
 
 const STEPS = [
@@ -49,18 +49,19 @@ const initialForm = (): FormState => ({
   hospitalRegr: false,
   dieta: [],
   dietaOtros: '',
-  dietaFecha: '',
+  dietaDesde: '',
+  dietaHasta: '',
   tratamiento: [],
   tratamientoOtros: '',
-  tratamientoFecha: '',
+  tratamientoDesde: '',
+  tratamientoHasta: '',
   tratamientoOtrosHoras: emptyHoras(),
   tratamientoOtrosForma: '',
   tratamientoOtrosFormaOtros: '',
   proceso: [],
   procesoOtros: '',
-  procesoFecha: '',
-  desde: '',
-  hasta: '',
+  procesoDesde: '',
+  procesoHasta: '',
   ctesP: '',
   ctesT: '',
   ctesS: '',
@@ -82,8 +83,6 @@ function getCamposVacios(form: FormState): string[] {
   if (!form.dieta.length && !form.dietaOtros.trim()) vacios.push('Dieta')
   if (!form.tratamiento.length && !form.tratamientoOtros.trim()) vacios.push('Tratamiento')
   if (!form.proceso.length && !form.procesoOtros.trim()) vacios.push('Proceso')
-  if (!form.desde) vacios.push('Desde')
-  if (!form.hasta) vacios.push('Hasta')
   if (!form.ctesP.trim()) vacios.push('Pulso')
   if (!form.ctesT.trim()) vacios.push('Temperatura')
   if (!form.ctesS.trim()) vacios.push('Saturación')
@@ -399,7 +398,12 @@ export function NuevaIncidenciaPage() {
         <div className={step === 3 ? 'space-y-4' : 'hidden'}>
             <Field label="Dieta" hint="Selecciona del listado. Puedes marcar varias.">
               <div className="space-y-3">
-                <ApartadoFecha value={form.dietaFecha} onChange={(v) => patch('dietaFecha', v)} />
+                <ApartadoPeriodo
+                  desde={form.dietaDesde}
+                  hasta={form.dietaHasta}
+                  onDesdeChange={(v) => patch('dietaDesde', v)}
+                  onHastaChange={(v) => patch('dietaHasta', v)}
+                />
                 <GlosarioSelector
                   grupos={GLOSARIO_DIETAS}
                   value={form.dieta}
@@ -418,9 +422,11 @@ export function NuevaIncidenciaPage() {
               hint="Indica hora y forma de administración de cada uno."
             >
               <div className="space-y-3">
-                <ApartadoFecha
-                  value={form.tratamientoFecha}
-                  onChange={(v) => patch('tratamientoFecha', v)}
+                <ApartadoPeriodo
+                  desde={form.tratamientoDesde}
+                  hasta={form.tratamientoHasta}
+                  onDesdeChange={(v) => patch('tratamientoDesde', v)}
+                  onHastaChange={(v) => patch('tratamientoHasta', v)}
                 />
                 <TratamientosEditor
                   value={form.tratamiento}
@@ -439,7 +445,12 @@ export function NuevaIncidenciaPage() {
 
             <Field label="Proceso" hint="Controles, muestras y actuaciones del plan de cuidados.">
               <div className="space-y-3">
-                <ApartadoFecha value={form.procesoFecha} onChange={(v) => patch('procesoFecha', v)} />
+                <ApartadoPeriodo
+                  desde={form.procesoDesde}
+                  hasta={form.procesoHasta}
+                  onDesdeChange={(v) => patch('procesoDesde', v)}
+                  onHastaChange={(v) => patch('procesoHasta', v)}
+                />
                 <GlosarioSelector
                   grupos={GLOSARIO_PROCESOS}
                   value={form.proceso}
@@ -452,25 +463,6 @@ export function NuevaIncidenciaPage() {
                 />
               </div>
             </Field>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Desde">
-                <input
-                  type="date"
-                  className={inputClass}
-                  value={form.desde}
-                  onChange={(e) => patch('desde', e.target.value)}
-                />
-              </Field>
-              <Field label="Hasta">
-                <input
-                  type="date"
-                  className={inputClass}
-                  value={form.hasta}
-                  onChange={(e) => patch('hasta', e.target.value)}
-                />
-              </Field>
-            </div>
         </div>
 
         <div className={step === 4 ? 'space-y-4' : 'hidden'}>

@@ -100,11 +100,15 @@ CREATE TABLE IF NOT EXISTS public.incidencias (
 
   dieta                         text[] NOT NULL DEFAULT '{}',
   dieta_otros                   text NOT NULL DEFAULT '',
+  dieta_desde                   text NOT NULL DEFAULT '',
+  dieta_hasta                   text NOT NULL DEFAULT '',
   dieta_fecha                   text NOT NULL DEFAULT '',
 
   -- [{ "nombre": "...", "hora": "08:00", "forma": "oral", "formaOtros": "" }]
   tratamiento                   jsonb NOT NULL DEFAULT '[]'::jsonb,
   tratamiento_otros             text NOT NULL DEFAULT '',
+  tratamiento_desde             text NOT NULL DEFAULT '',
+  tratamiento_hasta             text NOT NULL DEFAULT '',
   tratamiento_fecha             text NOT NULL DEFAULT '',
   tratamiento_otros_horas       text[] NOT NULL DEFAULT '{}',
   tratamiento_otros_hora        text NOT NULL DEFAULT '',
@@ -117,8 +121,11 @@ CREATE TABLE IF NOT EXISTS public.incidencias (
 
   proceso                       text[] NOT NULL DEFAULT '{}',
   proceso_otros                 text NOT NULL DEFAULT '',
+  proceso_desde                 text NOT NULL DEFAULT '',
+  proceso_hasta                 text NOT NULL DEFAULT '',
   proceso_fecha                 text NOT NULL DEFAULT '',
 
+  -- Legacy: periodo global de tratamiento (migrado a tratamiento_desde/hasta)
   desde                         text NOT NULL DEFAULT '',
   hasta                         text NOT NULL DEFAULT '',
 

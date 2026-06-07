@@ -1,9 +1,9 @@
 import type { Incidencia, IncidenciaFilters, Persona } from '../types'
-import { normalizeEstados } from './estados'
 import { normalizePersona } from './habitaciones'
-import { formatListaConOtros, normalizeLista } from './listas'
+import { formatListaConOtros } from './listas'
 import { matchesIncidenciaFechaFilter } from './dates'
-import { formatTratamientos, normalizeHoras, normalizeTratamientos } from './tratamientos'
+import { normalizeIncidencia } from './normalizeIncidencia'
+import { formatTratamientos } from './tratamientos'
 import { isSupabaseConfigured } from './supabase'
 import {
   createIncidenciaInSupabase,
@@ -57,33 +57,6 @@ function seedIfNeededLocal(): void {
   write(KEYS.personas, [])
   write(KEYS.incidencias, [])
   write(KEYS.seeded, true)
-}
-
-function normalizeIncidencia(item: Incidencia): Incidencia {
-  return {
-    ...item,
-    estado: normalizeEstados(item.estado as string | string[]),
-    estadoOtros: item.estadoOtros ?? '',
-    ctesGlucemia: item.ctesGlucemia ?? '',
-    ctesPeso: item.ctesPeso ?? '',
-    prioridad: item.prioridad ?? '',
-    dieta: normalizeLista(item.dieta as string | string[]),
-    dietaOtros: item.dietaOtros ?? '',
-    dietaFecha: item.dietaFecha ?? '',
-    tratamiento: normalizeTratamientos(item.tratamiento),
-    tratamientoOtros: item.tratamientoOtros ?? '',
-    tratamientoFecha: item.tratamientoFecha ?? '',
-    tratamientoOtrosHoras: normalizeHoras(
-      item.tratamientoOtrosHoras,
-      (item as { tratamientoOtrosHora?: string }).tratamientoOtrosHora,
-    ),
-    tratamientoOtrosForma: item.tratamientoOtrosForma ?? '',
-    tratamientoOtrosFormaOtros: item.tratamientoOtrosFormaOtros ?? '',
-    proceso: normalizeLista(item.proceso as string | string[]),
-    procesoOtros: item.procesoOtros ?? '',
-    procesoFecha: item.procesoFecha ?? '',
-    firmaDibujo: item.firmaDibujo ?? '',
-  }
 }
 
 function getPersonasLocal(): Persona[] {
@@ -165,7 +138,9 @@ export async function deletePersona(id: string): Promise<void> {
 }
 
 export async function getIncidencias(): Promise<Incidencia[]> {
-  if (isSupabaseConfigured) return getIncidenciasFromSupabase()
+  if (isSupabaseConfigured) {
+    return (await getIncidenciasFromSupabase()).map((item) => normalizeIncidencia(item))
+  }
   return getIncidenciasLocal()
 }
 

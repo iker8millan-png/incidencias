@@ -12,7 +12,7 @@ interface EstadosSelectorProps {
 }
 
 export function EstadosSelector({ value, onChange, otro = '', onOtroChange }: EstadosSelectorProps) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const q = query.trim().toLowerCase()
 
@@ -83,7 +83,7 @@ export function EstadosSelector({ value, onChange, otro = '', onOtroChange }: Es
               </>
             ) : (
               <>
-                Editar
+                Elegir
                 <ChevronDown size={14} />
               </>
             )}

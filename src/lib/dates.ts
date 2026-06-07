@@ -18,6 +18,35 @@ function isIsoDate(value: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(value)
 }
 
+function periodoIntersectaRango(
+  inicio: string,
+  fin: string,
+  filtroDesde: string,
+  filtroHasta: string,
+): boolean {
+  return inicio <= filtroHasta && fin >= filtroDesde
+}
+
+type LegacyIncidencia = Incidencia & {
+  dietaFecha?: string
+  tratamientoFecha?: string
+  procesoFecha?: string
+  desde?: string
+  hasta?: string
+}
+
+function periodosApartados(item: LegacyIncidencia): Array<[string, string]> {
+  const legacy = item
+  return [
+    [item.dietaDesde || legacy.dietaFecha || '', item.dietaHasta || ''],
+    [
+      item.tratamientoDesde || legacy.tratamientoFecha || legacy.desde || '',
+      item.tratamientoHasta || legacy.hasta || '',
+    ],
+    [item.procesoDesde || legacy.procesoFecha || '', item.procesoHasta || ''],
+  ]
+}
+
 /**
  * Comprueba si una incidencia entra en el rango de fechas del listado.
  * Sin filtros de fecha, siempre devuelve true.
@@ -35,19 +64,18 @@ export function matchesIncidenciaFechaFilter(
 
   const puntos = new Set<string>()
   if (isIsoDate(item.fecha)) puntos.add(item.fecha)
-  if (options?.periodoTratamiento) {
-    if (isIsoDate(item.desde)) puntos.add(item.desde)
-    if (isIsoDate(item.hasta)) puntos.add(item.hasta)
-  }
   if (item.createdAt) puntos.add(item.createdAt.slice(0, 10))
 
   for (const punto of puntos) {
     if (punto >= desde && punto <= hasta) return true
   }
 
-  if (options?.periodoTratamiento && isIsoDate(item.desde)) {
-    const fin = isIsoDate(item.hasta) ? item.hasta : item.desde
-    if (item.desde <= hasta && fin >= desde) return true
+  if (options?.periodoTratamiento) {
+    for (const [inicio, fin] of periodosApartados(item as LegacyIncidencia)) {
+      if (!isIsoDate(inicio)) continue
+      const finPeriodo = isIsoDate(fin) ? fin : inicio
+      if (periodoIntersectaRango(inicio, finPeriodo, desde, hasta)) return true
+    }
   }
 
   return puntos.size === 0
