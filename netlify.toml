@@ -1,9 +1,6 @@
-# Netlify — no usar el Supabase antiguo embebido en el build.
-# La app lee /config.json en runtime (proyecto obczvycvnmhduopntshz).
+# Netlify — build estándar. Configura en el panel:
+#   VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_SUPABASE_AUTH_EMAIL
+# O usa public/config.json (ver supabase/README.md).
 [build]
   command = "npm run build"
   publish = "dist"
-
-[build.environment]
-  VITE_SUPABASE_URL = ""
-  VITE_SUPABASE_ANON_KEY = ""

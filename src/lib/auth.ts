@@ -19,23 +19,29 @@ const CENTRO_SESSION: AuthSession = {
   displayName: 'Personal del centro',
 }
 
+/** Email del usuario en Supabase Auth (Authentication → Users). */
+function getSupabaseLoginEmail(): string {
+  const fromEnv = (import.meta.env.VITE_SUPABASE_AUTH_EMAIL as string | undefined)?.trim()
+  if (fromEnv) return fromEnv
+  return getSupabaseAuthEmail()
+}
+
 export async function login(password: string): Promise<AuthSession> {
   const pass = password
 
   if (isSupabaseConfigured()) {
     const supabase = getSupabase()
     if (!supabase) throw new Error('Supabase no disponible')
-    const email = getSupabaseAuthEmail()
+    const email = getSupabaseLoginEmail()
     const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass })
-    if (!error && data.user) {
-      const session: AuthSession = {
-        workerId: data.user.id,
-        displayName:
-          (data.user.user_metadata?.displayName as string) || CENTRO_SESSION.displayName,
-      }
-      localStorage.setItem(SESSION_KEY, JSON.stringify(session))
-      return session
+    if (error || !data.user) throw new Error('Contraseña incorrecta')
+    const session: AuthSession = {
+      workerId: data.user.id,
+      displayName:
+        (data.user.user_metadata?.displayName as string) || CENTRO_SESSION.displayName,
     }
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+    return session
   }
 
   const expected = getAppPassword()
