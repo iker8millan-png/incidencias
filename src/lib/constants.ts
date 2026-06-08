@@ -13,6 +13,7 @@ export const AREAS: { code: AreaCode; label: string }[] = [
   { code: 'A.L', label: 'Limpieza' },
   { code: 'A.R', label: 'Refuerzo' },
   { code: 'A.CO', label: 'Coordinación' },
+  { code: 'A.M', label: 'Mantenimiento' },
 ]
 
 export const TURNOS: { code: Turno; label: string }[] = [

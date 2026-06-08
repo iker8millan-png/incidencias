@@ -12,6 +12,7 @@ export type AreaCode =
   | 'A.L'
   | 'A.R'
   | 'A.CO'
+  | 'A.M'
 
 export type UserRole = 'staff' | 'admin'
 

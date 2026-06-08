@@ -25,7 +25,7 @@ BEGIN
 
   IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'area_code') THEN
     CREATE TYPE public.area_code AS ENUM (
-      'A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO'
+      'A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO', 'A.M'
     );
   END IF;
 
@@ -83,9 +83,9 @@ CREATE TABLE IF NOT EXISTS public.incidencias (
   fecha                         date NOT NULL,
   turno                         public.turno_code NOT NULL,
   de                            text[] NOT NULL DEFAULT '{}'
-    CHECK (de <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO']::text[]),
+    CHECK (de <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO', 'A.M']::text[]),
   a                             text[] NOT NULL DEFAULT '{}'
-    CHECK (a <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO']::text[]),
+    CHECK (a <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO', 'A.M']::text[]),
 
   estado                        text[] NOT NULL DEFAULT '{}',
   estado_otros                  text NOT NULL DEFAULT '',

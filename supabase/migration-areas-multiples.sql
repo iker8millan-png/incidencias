@@ -87,10 +87,10 @@ ALTER TABLE public.incidencias
 
 ALTER TABLE public.incidencias
   ADD CONSTRAINT incidencias_de_check CHECK (
-    de <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO']::text[]
+    de <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO', 'A.M']::text[]
   ),
   ADD CONSTRAINT incidencias_a_check CHECK (
-    a <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO']::text[]
+    a <@ ARRAY['A.D', 'A.S', 'A.T', 'P.R', 'EQ', 'A.C', 'A.L', 'A.R', 'A.CO', 'A.M']::text[]
   );
 
 CREATE INDEX IF NOT EXISTS incidencias_de_gin_idx

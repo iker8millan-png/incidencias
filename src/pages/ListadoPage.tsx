@@ -194,8 +194,6 @@ export function ListadoPage() {
 
     if (tipo === 'tratamientos') {
       base = filterIncidenciasPorTratamiento(base, filters.tratamiento, true)
-    } else if (filters.tratamiento) {
-      base = filterIncidenciasPorTratamiento(base, filters.tratamiento)
     } else if (campo) {
       base = filterIncidenciasPorConcepto(base, campo, concepto)
     }
@@ -241,7 +239,7 @@ export function ListadoPage() {
 
   const hasFilters = Object.values(filters).some(Boolean) || !!concepto
 
-  const showTratamientoFilter = tipo === 'general' || tipo === 'tratamientos'
+  const showTratamientoFilter = tipo === 'tratamientos'
 
   if (loadingPersonas || loadingIncidencias) {
     return (
